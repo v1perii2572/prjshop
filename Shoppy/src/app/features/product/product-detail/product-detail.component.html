@@ -1,0 +1,119 @@
+<section class="product product-info">
+  <div class="container">
+    <!-- Breadcrumb -->
+    <div class="blog-bradcrum">
+      <span
+        ><a routerLink="/"><i class="fas fa-home"></i> Home</a></span
+      >
+      <span class="devider">/</span>
+      <span
+        ><a routerLink="/shop"><i class="fas fa-store"></i> Shop</a></span
+      >
+      <span class="devider">/</span>
+      <span><i class="fas fa-info-circle"></i> Product Details</span>
+    </div>
+
+    <!-- Product Info Section -->
+    <div class="product-info-section" *ngIf="product">
+      <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6">
+          <div class="product-info-img" data-aos="fade-right">
+            <img
+              [src]="product.imageUrl || 'assets/placeholder.jpg'"
+              alt="Product Image"
+            />
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+          <div class="product-info-content" data-aos="fade-left">
+            <!-- Category -->
+            <span class="wrapper-subtitle">{{
+              category?.name || "No category available"
+            }}</span>
+
+            <!-- Product Name -->
+            <h5>{{ product.name || "Product Name Not Available" }}</h5>
+
+            <!-- Ratings -->
+            <div class="ratings">
+              <span>
+                <svg
+                  width="75"
+                  height="15"
+                  viewBox="0 0 75 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.5 0L9.18386 5.18237H14.6329L10.2245 8.38525L11.9084 13.5676L7.5 10.3647L3.09161 13.5676L4.77547 8.38525L0.367076 5.18237H5.81614L7.5 0Z"
+                    fill="#FFA800"
+                  />
+                </svg>
+              </span>
+              <span>4.5 Reviews</span>
+            </div>
+
+            <!-- Price -->
+            <div class="price">
+              <span class="price-cut">{{
+                product.price | currency : "USD" : "symbol" : "1.0-0"
+              }}</span>
+            </div>
+
+            <!-- Description -->
+            <p class="content-paragraph">
+              {{ product.description || "No description available." }}
+            </p>
+            <hr />
+
+            <!-- Stock Availability -->
+            <div class="product-availability">
+              <span>Availability: </span>
+              <span class="inner-text">{{ product.stockQuantity }}</span>
+            </div>
+
+            <!-- Add to Cart -->
+            <div class="product-quantity">
+              <div class="quantity-wrapper">
+                <div class="quantity">
+                  <button class="minus" (click)="decreaseQuantity()">-</button>
+                  <span class="number">{{ quantity }}</span>
+                  <button class="plus" (click)="increaseQuantity()">+</button>
+                </div>
+              </div>
+              <button class="shop-btn" (click)="addToCart()">
+                <span>Add to Cart</span>
+              </button>
+            </div>
+            <hr />
+
+            <!-- Additional Product Details -->
+            <div class="product-details">
+              <p class="category">
+                Category:
+                <span class="inner-text">{{
+                  category?.name || "Not specified"
+                }}</span>
+              </p>
+              <p>
+                Created Date:
+                <span class="inner-text">{{
+                  product.createdDate | date : "medium"
+                }}</span>
+              </p>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- If No Product -->
+    <div class="no-product" *ngIf="!product">
+      <p>Product not found. Please try again later.</p>
+    </div>
+  </div>
+</section>

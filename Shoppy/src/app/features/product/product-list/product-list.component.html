@@ -1,0 +1,104 @@
+<section class="product product-sidebar footer-padding">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Sidebar Lọc -->
+      <div class="col-lg-3">
+        <div class="sidebar" data-aos="fade-right">
+          <div class="sidebar-section">
+            <div class="sidebar-wrapper">
+              <h5 class="wrapper-heading">Danh Mục Sản Phẩm</h5>
+              <div class="sidebar-item">
+                <ul class="sidebar-list">
+                  <li *ngFor="let category of categories">
+                    <input
+                      type="checkbox"
+                      [id]="category.id"
+                      [(ngModel)]="selectedCategories[category.id]"
+                      (change)="toggleCategoryFilter(category.id)"
+                    />
+                    <label [for]="category.id">{{ category.name }}</label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+
+      <!-- Hiển Thị Sản Phẩm -->
+      <div class="col-lg-9">
+        <div class="product-sidebar-section" data-aos="fade-up">
+          <div class="row g-5">
+            <div class="col-lg-12">
+              <div class="product-sorting-section">
+                <div class="result">
+                  <p>
+                    Hiển thị <span>{{ filteredProducts.length }} sản phẩm</span>
+                  </p>
+                </div>
+                <button (click)="clearFilters()" class="btn btn-warning">
+                  Hiển thị tất cả
+                </button>
+              </div>
+            </div>
+
+            <!-- Lưới Sản Phẩm -->
+            <ng-container *ngIf="filteredProducts.length > 0; else noProducts">
+              <div
+                class="col-lg-4 col-sm-6"
+                *ngFor="
+                  let product of filteredProducts
+                    | paginate
+                      : { itemsPerPage: itemsPerPage, currentPage: currentPage }
+                "
+              >
+                <div class="product-wrapper" data-aos="fade-up">
+                  <div class="product-img">
+                    <a [routerLink]="['/product-details', product.id]">
+                      <img
+                        [src]="getValidImageUrl(product.imageUrl)"
+                        [alt]="product.name"
+                        class="img-fluid"
+                      />
+                    </a>
+                  </div>
+                  <div class="product-text">
+                    <a [routerLink]="['/product-details', product.id]">
+                      <h5>{{ product.name }}</h5>
+                    </a>
+                    <p class="price">
+                      {{
+                        product.price | currency : "VND" : "symbol" : "1.0-0"
+                      }}
+                    </p>
+                    <p
+                      class="stock"
+                      [class.low-stock]="product.stockQuantity < 5"
+                    >
+                      Còn lại: {{ product.stockQuantity }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-template #noProducts>
+              <div class="col-lg-12 text-center">
+                <p>Không tìm thấy sản phẩm phù hợp.</p>
+              </div>
+            </ng-template>
+
+            <!-- Phân Trang -->
+            <pagination-controls
+              (pageChange)="currentPage = $event"
+              previousLabel="«"
+              nextLabel="»"
+              class="pagination-controls"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

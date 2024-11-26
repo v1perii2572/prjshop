@@ -1,0 +1,27 @@
+<div class="payment-container">
+    <h2>Payment</h2>
+    <form (submit)="submitPayment()">
+        <div>
+            <label for="orderType">Order Type</label>
+            <input id="orderType" [(ngModel)]="paymentInfo.orderType" name="orderType" type="text" required />
+        </div>
+
+        <div>
+            <label for="amount">Amount</label>
+            <input id="amount" [(ngModel)]="paymentInfo.amount" name="amount" type="number" required />
+        </div>
+
+        <div>
+            <label for="orderDescription">Order Description</label>
+            <input id="orderDescription" [(ngModel)]="paymentInfo.orderDescription" name="orderDescription" type="text"
+                required />
+        </div>
+
+        <div>
+            <label for="name">Name</label>
+            <input id="name" [(ngModel)]="paymentInfo.name" name="name" type="text" required />
+        </div>
+
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
